@@ -1,4 +1,4 @@
-package pl.java.scalatech.domain;
+package pl.java.scalatech.domain.exerciseOne;
 
 import pl.java.scalatech.domain.common.AbstractEntity;
 

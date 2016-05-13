@@ -1,4 +1,4 @@
-package pl.java.scalatech.domain;
+package pl.java.scalatech.domain.exerciseOne;
 
 import java.util.ArrayList;
 import java.util.Collection;
