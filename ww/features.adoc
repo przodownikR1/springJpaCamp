@@ -1,0 +1,449 @@
+= TEST asciiDoc
+:docInfo1
+:numbered:
+:icons: font
+:pagenums:
+:imagesdir: img
+:iconsdir: ./icons
+:stylesdir: ./styles
+:scriptsdir: ./js
+
+:image-link: https://pbs.twimg.com/profile_images/425289501980639233/tUWf7KiC.jpeg
+ifndef::sourcedir[:sourcedir: ./src/main/java/]
+ifndef::resourcedir[:resourcedir: ./src/main/resources/]
+ifndef::imgsdir[:imgsdir: ./../img]
+:source-highlighter: coderay
+
+
+
+TIP: Tip.
+
+IMPORTANT: Don't forget...
+
+WARNING: Watch out for...
+
+CAUTION: Ensure that...
+
+NOTE: For you info
+
+ link:http://mvnrepository.com/artifact/org.hibernate/hibernate-java8
+ 
+ http://mvnrepository.com/artifact/org.hibernate/hibernate-java8
+
+
+** load()
+
+----
+ Na podstawie danego Id metoda load próbuje pobrać obiekt z bazy danych. Jeśli obiekt nie istnieje wyrzucany jest wyjątek **_org.hibernate.ObjectNotFoundExceptionMetoda_**  **load()** zwraca też proxy, oznacza to tyle, że nie nastąpi uderzenie do bazy danych do czasu kiedy faktycznie będziemy potrzebować danego obiektu. Proxy zwraca dummy object zamiast uderzyć do db. Jeśli obiekt jest w first-level cache zwróci obiekt. Jeśli obiektu nie ma w first-level-cache uderzy do bazy.
+----
+[red] #test#
+
+
+http://www.asciidoc.org[AsciiDoc Web Site]
+
+====
+
+  Predicate predicate = criteriabuilder.conjunction();
+        if(orderStatus != null)
+            predicate = criteriabuilder.and(predicate, criteriabuilder.equal(root.get("orderStatus"), orderStatus));
+        if(paymentStatus != null)
+            predicate = criteriabuilder.and(predicate, criteriabuilder.equal(root.get("paymentStatus"), paymentStatus));
+        if(shippingStatus != null)
+            predicate = criteriabuilder.and(predicate, criteriabuilder.equal(root.get("shippingStatus"), shippingStatus));
+        if(hasExpired != null)
+            if(hasExpired.booleanValue())
+                predicate = criteriabuilder.and(new Predicate[] {
+                    predicate, root.get("expire").isNotNull(), criteriabuilder.lessThan(root.get("expire"), new Date())
+                });
+            else
+                predicate = criteriabuilder.and(predicate, criteriabuilder.or(root.get("expire").isNull(), criteriabuilder.greaterThanOrEqualTo(root.get("expire"), new Date())));
+        criteriaquery.where(predicate);
+        return super.IIIllIlI(criteriaquery, pageable);
+        
+        
+        
+        ====
+        Predicate and
+        
+        
+        Root<Employee> employeeRoot = criteriaQuery.from(Employee.class);
+        Predicate qaDepartment = criteriaBuilder.equal(employeeRoot.get("department").get("name"),"QA");
+        Predicate salary = criteriaBuilder.ge(employeeRoot.<Long>get("salary"), 55000L);
+
+        List<Predicate> andList = new ArrayList<Predicate>();
+        andList.add(qaDepartment);
+        andList.add(salary);
+
+        criteriaQuery.select(employeeRoot);
+        criteriaQuery.where(andList.toArray(new Predicate[0]));
+        //criteriaQuery.where(qaDepartment,salary);
+        
+        
+        =============== Or _ + join
+         public static Specification<Application> isPublicOrHasForMember(SSOId ssoId) {
+        return new Specification<Application>() {
+            @Override
+            public Predicate toPredicate(Root<Application> applications, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                final Join<Object, Object> members = applications.join("members", JoinType.LEFT);
+                final Predicate isPublic = criteriaBuilder.equal(applications.get("isPublic"), Boolean.TRUE);
+                final Predicate hasForMember = criteriaBuilder.equal(members.get("value"), ssoId.getValue());
+                return criteriaBuilder.or(isPublic, hasForMember);
+            }
+        };
+    }
+        ============
+        
+        int arg1 = 20000;
+int arg2 = 50000;
+Query query = entityManager.createQuery("from SimpleBean s where s.pint>=:arg1 and s.pint<=:arg2");
+query.setParameter("arg1", arg1);
+query.setParameter("arg2", arg2);
+List<SimpleBean> list = query.getResultList();
+ 
+//..
+Predicate predicate1 = criteriaBuilder.ge(from.get("pint"), arg1);
+Predicate predicate2 = criteriaBuilder.le(from.get("pint"), arg2);
+criteriaQuery.where(criteriaBuilder.and(predicate1, predicate2));
+
+
+===min
+
+Query query = entityManager.createQuery("select min(s.pint) from SimpleBean s");
+ 
+Object minActual = query.getSingleResult();
+ 
+CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+CriteriaQuery<Object> criteriaQuery = criteriaBuilder.createQuery();
+Root from = criteriaQuery.from(SimpleBean.class);
+ 
+Expression minExpression = criteriaBuilder.min(from.get("pint"));
+CriteriaQuery<Object> select = criteriaQuery.select(minExpression);
+ 
+TypedQuery<Object> typedQuery = entityManager.createQuery(select);
+Object minExpected = typedQuery.getSingleResult();
+assertEquals(minActual, minExpected);
+
+===
+CriteriaQuery<Employee> c = cb.createQuery(Employee.class);
+Root<Employee> emp = c.from(Employee.class);
+c.select(emp).where(cb.equal(emp.get("address").get("city"), "New York"));
+
+
+=====
+JOIN
+
+Join<Employee,Employee> directs = emp.join("directs");
+Join<Employee,Project> projects = directs.join("projects");
+Join<Employee,Department> dept = directs.join("dept");
+
+ 
+Join<Employee,Project> project = dept.join("employees").join("projects");
+
+====
+Between
+
+Root<Bid> b = criteria.from(Bid.class);
+criteria.select(b).where(cb.between(b.<BigDecimal>get("amount"),new BigDecimal("99"), new BigDecimal("110")));
+ 
+//GT uwaga The gt() method only accepts arguments of Number type, such as BigDecimal or Integer .
+
+Root<Bid> b = criteria.from(Bid.class);
+criteria.select(b).where(cb.gt(b.<BigDecimal>get("amount"),new BigDecimal("100")));
+
+Root<Item> i = criteria.from(Item.class);
+criteria.select(i).where(cb.greaterThan(i.<Date>get("auctionEnd"),tomorrowDate));
+=====isNotNull
+
+Root<Item> i = criteria. from (Item.class);
+criteria.select(i).where(cb.isNull(i.get("buyNowPrice")));
+
+==== not like
+
+Root<User> u = criteria.from(User.class);
+criteria.select(u).where(cb.like(u.<String>get("username"), "john%").not());
+
+====================collection
+
+notEmpty
+
+select c from Category c
+where c.items is not empty
+Root<Category> c = criteria.from(Category.class);
+criteria.select(c).where(cb.isNotEmpty(c.<Collection>get("items")));
+
+================
+select c from Category c
+where size(c.items) > 1
+Root<Category> c = criteria.from(Category.class);
+criteria.select(c).where(cb.gt(cb.size(c.<Collection>get("items")),1));
+
+=====
+select c from Category c
+where :item member of c.items
+Root<Category> c = criteria.from(Category.class);
+criteria.select(c).where(cb.isMember(cb.parameter(Item.class, "item"),c.<Collection<Item>>get("items")));
+
+=========lower
+
+
+Root<Item> i = criteria.from(Item.class);
+criteria.select(i).where(
+cb.like(cb.lower(i.<String>get("name")), "ba%"));
+
+=====
+new constructor 
+
+select new org.jpwh.model.querying.ItemSummary( i.id, i.name, i.auctionEnd) from Item i
+
+Root<Item> i = criteria.from(Item.class);
+criteria.select(
+cb.construct(ItemSummary.class,i.get("id"), i.get("name"), i.get("auctionEnd")));
+
+===distinct
+
+select distinct i.name from Item i
+CriteriaQuery<String> criteria = cb.createQuery(String.class);
+criteria.select(
+criteria.from(Item.class).<String>get("name")
+);
+criteria.distinct(true);
+
+
+==== concat
+
+
+select concat(concat(i.name, ': '), i.auctionEnd) from Item i
+Root<Item> i = criteria.from(Item.class);
+criteria.select(cb.concat(cb.concat(i.<String>get("name"), ":"),i.<String>get("auctionEnd")));
+
+====
+Next, the coalesce() function returns null if all its arguments evaluate to null ;  otherwise it returns the value of the first non-null argument:
+
+
+select i.name, coalesce(i.buyNowPrice, 0) from Item i
+Root<Item> i = criteria.from(Item.class);
+criteria.multiselect(i.get("name"),cb.coalesce(i.<BigDecimal>get("buyNowPrice"), 0));
+
+====case
+
+select
+u.username,
+case when length(u.homeAddress.zipcode) = 5 then 'Germany'
+when length(u.homeAddress.zipcode) = 4 then 'Switzerland'
+else 'Other'
+end
+from User u
+
+
+Root<User> u = criteria.from(User.class);
+criteria.multiselect(
+u.get("username"),
+cb.selectCase()
+.when(
+cb.equal(
+cb.length(u.get("homeAddress").<String>get("zipcode")), 5
+), "Germany"
+)
+.when(
+cb.equal(
+cb.length(u.get("homeAddress").<String>get("zipcode")), 4
+), "Switzerland"
+)
+.otherwise("Other")
+);
+
+==== aggregate function
+
+select count(i) from Item i
+criteria.select(
+cb.count(criteria.from(Item.class))
+);
+
+Long count = (Long)query.getSingleResult();
+
+
+
+The special count(distinct) JPQL function and countDistinct() method ignore duplicates:
+
+select count(distinct i.name) from Item i
+criteria.select(
+cb.countDistinct(
+criteria.from(Item.class).get("name")
+)
+);
+
+=====sum
+
+
+select sum(b.amount) from Bid b
+
+CriteriaQuery<Number> criteria = cb.createQuery(Number.class);
+criteria.select(cb.sum(criteria.from(Bid.class).<BigDecimal>get("amount")));
+
+======
+
+select min(b.amount), max(b.amount) from Bid b
+where b.item.id = :itemId
+Root<Bid> b = criteria.from(Bid.class);
+criteria.multiselect(
+cb.min(b.<BigDecimal>get("amount")),
+cb.max(b.<BigDecimal>get("amount"))
+);
+
+criteria.where(cb.equal(b.get("item").<Long>get("id"),cb.parameter(Long.class, "itemId")
+)
+);
+
+
+==== grouping 
+
+select u.lastname, count(u) from User u
+group by u.lastname
+Root<User> u = criteria.from(User.class);
+criteria.multiselect(u.get("lastname"),cb.count(u));
+criteria.groupBy(u.get("lastname"));
+
+
+==== implicit join 
+
+select b from Bid b where b.item.name like 'Fo%'
+
+Root<Bid> b = criteria.from(Bid.class);
+criteria.select(b).where(cb.like(b.get("item").<String>get("name"),"Fo%"));
+
+==== join and
+
+select b from Bid b where b.item.seller.username = 'johndoe' and b.item.buyNowPrice is not null
+
+
+Root<Bid> b = criteria.from(Bid.class);
+criteria.select(b).where(
+cb.and(
+cb.equal(b.get("item").get("seller").get("username"),"johndoe"),
+cb.isNotNull(b.get("item").get("buyNowPrice"))
+)
+);
+
+=====Explicit joins
+
+select i from Item i join i.bids b where b.amount > 100
+
+Root<Item> i = criteria.from(Item.class);
+Join<Item, Bid> b = i.join("bids");
+criteria.select(i).where(cb.gt(b.<BigDecimal>get("amount"), new BigDecimal(100)));
+
+======= left
+
+select i, b from Item i left join i.bids b on b.amount > 100
+
+Root<Item> i = criteria.from(Item.class);
+Join<Item, Bid> b = i.join("bids", JoinType.LEFT);
+b.on(cb.gt(b.<BigDecimal>get("amount"), new BigDecimal(100)));
+criteria.multiselect(i, b);
+
+
+====== right
+
+select b, i from Bid b right outer join b.item i  where b is null or b.amount > 100
+
+Root<Bid> b = criteria.from(Bid.class);
+Join<Bid, Item> i = b.join("item", JoinType.RIGHT);
+criteria.multiselect(b, i).where(
+cb.or(cb.isNull(b),cb.gt(b.<BigDecimal>get("amount"), new BigDecimal(100)))
+
+==== Dynamic fetching with joins
+
+select i from Item i  left join fetch i.bids
+
+Root<Item> i = criteria.from(Item.class);
+i.fetch("bids", JoinType.LEFT);
+criteria.select(i);
+
+
+=== 
+
+select distinct i from Item i
+left join fetch i.bids b
+join fetch b.bidder
+left join fetch i.seller
+Root<Item> i = criteria.from(Item.class);
+Fetch<Item, Bid> b = i.fetch("bids", JoinType.LEFT);
+b.fetch("bidder");
+i.fetch("seller", JoinType.LEFT);
+criteria.select(i).distinct(true);
+
+
+
+==theta
+
+select u, log from User u, LogRecord log  where u.username = log.username
+Root<User> u = criteria.from(User.class);
+Root<LogRecord> log = criteria.from(LogRecord.class);
+criteria.where(cb.equal(u.get("username"), log.get("username"))); criteria.multiselect(u, log);
+
+
+
+List<Object[]> result = query.getResultList();
+for (Object[] row : result) {
+assertTrue(row[0] instanceof User);
+assertTrue(row[1] instanceof LogRecord);
+}
+
+== theta by key
+
+select i, b from Item i, Bid b  where b.item = i and i.seller = b.bidder
+
+Root<Item> i = criteria.from(Item.class);
+Root<Bid> b = criteria.from(Bid.class);
+criteria.where(
+cb.equal(b.get("item"), i),
+cb.equal(i.get("seller"), b.get("bidder"))
+);
+criteria.multiselect(i, b);
+
+
+
+===== subselect
+
+
+select u from User u where ( select count(i) from Item i where i.seller = u  ) > 1
+ 
+Root<User> u = criteria.from(User.class);
+Subquery<Long> sq = criteria.subquery(Long.class);
+Root<Item> i = sq.from(Item.class);
+sq.select(cb.count(i)).where(cb.equal(i.get("seller"), u) );
+criteria.select(u);
+criteria.where(cb.greaterThan(sq, 1L));
+
+===Example QBE like
+
+Book book = new Book();
+ 
+book.setName("Book");
+book.setPublisher("Publisher%");
+book.setPrice(30);
+ 
+Example example = Example.create(book)
+.enableLike()
+.excludeProperty("price");
+Criteria criteria = session.createCriteria(Book.class)
+
+
+======bulk
+
+Session session = SessionManager.openSession();
+Transaction tx = session.beginTransaction();
+for(int i=0;i<100;i++) {
+Book book = new Book()
+book.setName("Book Name "+(i+1));
+book.setPrice(39);
+book.setPublishDate(new Date());
+session.save(book);
+if(i % 25 == 0) {
+session.flush();
+session.clear();
+System.out.println("get isbn "+book.getIsbn());
+}
+}
+tx.commit();
+session.close();
