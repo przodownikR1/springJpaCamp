@@ -1,5 +1,3 @@
-
-:docInfo1
 :numbered:
 :icons: font
 :pagenums:
@@ -15,7 +13,30 @@ ifndef::imgsdir[:imgsdir: ./../img]
 :source-highlighter: coderay
 
 
+== O mnie
+* Architect Solution - RiscoSoftware 
+* JavaTech trener : Spring ekosystem, JPA , EIP Camel 
+* Sages trener : JPA , EIP - Apache Camel 
+* blog link:http://przewidywalna-java.blogspot.com[]
+* twitter przodownikR1
 
+image:{image-link} [role='img-circle']
+
+== Źródła wiedzy 
+ - Hibernate in Action
+ - Java Persistence with Hibernate
+ - Java JEE 6
+ - Pro JPA 2
+ - Pro JPA 2: Mastering the Java(TM) Persistence API (Expert's Voice in Java Technology)
+ - Hibernate from Novice to Professional 
+ - Spring Data Modern Data Access for Enterprise Java
+ - Spring Data
+ - Spring Boot
+ - Spring Essentials
+ - Spring in Action
+ - etc 
+
+== Hibernate / JPA
 
 == Dziedziczenie / Polimorfizm
 
@@ -53,7 +74,7 @@ public class CreditCard extends BillingDetails {
 
 - source https://detailfocused.wordpress.com
 
-image:tablePerConcreteClass.jpg[width=640%]
+image:tablePerConcreteClass.jpg[]
 
 
 == Tabela na każdą hierarchię klas (Table per class hierarchy /   Single-Table Strategy)
@@ -68,11 +89,7 @@ image:tablePerConcreteClass.jpg[width=640%]
 
 - source https://detailfocused.wordpress.com
 
-
-
-image::singleTable.jpg[width=640%]
-
-
+image::singleTable.jpg[]
 
 
 NOTE: Najbardziej wydajna oraz najprostsza ze wszystkich strategii
@@ -208,7 +225,7 @@ public class CreditCard extends BillingDetails {
 
 - source :https://detailfocused.wordpress.com 
 
-image::joinedStrategy.jpg[width=640%]
+image::joinedStrategy.jpg[]
 
 
 
@@ -252,6 +269,6 @@ public class CreditCard extends BillingDetails {
 }
 ----
 
-image:tablePerConcreteClass.jpg[width=640%]
 
+image:tablePerConcreteClass.jpg[]
 

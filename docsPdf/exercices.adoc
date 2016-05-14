@@ -1,5 +1,3 @@
-
-:docInfo1
 :numbered:
 :icons: font
 :pagenums:

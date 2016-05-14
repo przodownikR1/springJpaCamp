@@ -1,4 +1,4 @@
-
+= JPA/Hibernate camp
 :docInfo1
 :numbered:
 :icons: font
@@ -75,7 +75,7 @@ image::application-layers2.png[]
 </dependency>
 ----
 
-
+WARNING: Validator nie generuje ograniczeń na bazie !
 
 
 === Validation-mode
