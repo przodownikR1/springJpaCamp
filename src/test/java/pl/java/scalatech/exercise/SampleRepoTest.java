@@ -79,11 +79,7 @@ public class SampleRepoTest {
         // TODO
     }
 
-    @Test
-    public void shouldUseJoinMap() {
-        // TODO
-    }
-
+   
     @Test
     public void shouldRetrieveEmpleyeeFetchPhones() {
         // TODO
@@ -109,8 +105,4 @@ public class SampleRepoTest {
         // TODO
     }
 
-    @Test
-    public void shouldDeptRetrieveUsingCoaleasce() {
-        // TODO
-    }
 }
