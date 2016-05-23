@@ -40,6 +40,341 @@ ifndef::imgsdir[:imgsdir: ./../img]
 
 === Criteria API
 
+== Przykłady
+
+=== Tematy pokrewne : Json : ograniczanie wyników : BootRest : User + UserOptController
+
+=== Setupowanie Spring/Spring Data/Hibernate oraz przykłady użycia i tworzenia repozytoriów 
+
+==== Audit : SpringDataKata : AuditTest
+==== Slice, Paging, Async, Stream : SpringDataKata: 	SpringDataRepositoryTest
+==== QBE : SpringJpaKata : JpqlByExampleTest:shouldUseExample()
+
+=== Zadanie przetestowanie : repozytorium i relacji
+
+=== Zadanie użycie funkcjonalności Audit , Pagingu , Optional i QBE w stosunku do utworzonych encji i repozytorim
+
+=== Utworzenie Specyfikacji oraz customizacja repozytorium
+
+=== Dodanie cache
+
+=== Metamodel :  Jpametamodel : RepositoryTest
+
+=== Lock : przykład : SpringDataKata : ItemRepository
+
+=== Projections
+
+==== przykład  :  SpringJpaKata : PersonRepoTest
+
+=== Like
+
+==== przykład : SpringDataKata : PersonRepoTest.shouldLikeWork
+
+== Zadanie skonfiguruj projekt min : baza , dostawca , transakcje
+
+=== przykład :projekt HibernateKata :  H2Database
+
+=== przykład : HibernateKata  : JpaConfigTest
+
+=== przykład : Konfiguracja Hibernate SessionFactory : HibernateKata  : AbstractHibTest
+
+== JDBC :  HibernateKata :  JdbcConfig
+
+== Populator : HibernateKata : PopulatorConfig
+
+== Prosta konfiguracja JPA do testów  : HibernateKata  : TestSelectorConfig 
+
+== Konfiguracja pojedynczej encji w kontekscie do testów : HibernateKata : AbstractConcreteClazzHibTest
+
+=== użycie w praktyce : HibernateKata :  ElementCollectionTest
+
+
+== konfiguracja z EntityManagerFactory
+
+=== przykład HibernateKata : SimpleUseJpaTempateTest
+
+== Podpinanie DS w Spring
+
+=== przyklad : SpringJpaKata : DataSourceTest
+
+== Integracja z Spring + audyt SqL http://przewidywalna-java.blogspot.com/2014/10/quick-spring-data-sql-audit.html
+
+== Klucze
+
+=== przykład  : HibernateKata : pl.java.scalatech.generator
+
+=== uuid,hilo, table,seq,identity,assigned
+
+=== złożone 
+
+==== przykład  : HibernateKata : UserId , test : MapKeyTest
+
+==  JPA 2.1 features
+
+=== konwerter : HibernateKata : SimpleProduct ,LuxuryItem
+
+=== przykład : SpringDataKata : CartTest
+
+=== namedQueryRuntime : SpringJpaKata : JpqlTest.shouldProgrammaticallyNamedQueries
+
+=== ConstructorResult : SpringJpaKata : ConstructorResultTest
+
+
+== Walidator
+
+=== przykład SpringJpaKata : ValidationPersonTest
+
+=== zadanie : przeprowadz test wybranej encji w projekcie
+
+== Pierwsza encja 
+
+=== Zadanie stworzyć i dodać encje Person
+
+=== Zadanie stworzyć i dodać encje Person
+
+=== skorzystać z EntityManager
+
+==== przykład: HibernateKata   : EntityFactoryTest,SimpleUseJpaTempateTest
+
+=== przykład : HibernateKata  : MessageQueryTest
+
+=== skorzystać z Session (Hibernate) z prawidłową obsługą
+
+=== zakładanie ograniczeń
+
+==== Zadanie założyć ograniczenia po stronie bazy i po stronie encji
+
+==== przykład : HibernateKata : BidCheck , User ,UserConstraintTwo, UserTableConststaint
+
+=== Zadanie  użyć secondaryTable 
+
+==== przyklad : HibernateKata:  Address 
+
+=== Zadanie praca z Lob
+
+==== przykład : HibernateKata : pl.java.scalatech.domain.exercise2.Item
+
+=== Zadanie : selfRefence 
+
+==== Przykład : HibernateKata SelfCategoryTest 
+
+==== Przykład 2 : HibernateKata : SelfReferenceTest
+
+
+== Dziedziczenie
+
+=== zadanie : zastosować każdy rodzaj dziedziczenia
+
+==== HibernateKata :pl.java.scalatech.domain.inherit
+
+==== SpringJpaKata :test : pl.java.scalatech.exercise.inheritence
+
+
+== Tworzenie zapytań
+
+=== Spring Data
+
+=== JPQL
+
+==== Natywne
+
+===== przykład  :SpringJpaKata : JpaNativeTest
+
+===== przykład : SpringJpaKata : Todo , ConstructorResultTest
+
+=== Stworz zaytania natywne
+
+=== Stwórz zapytania nazwane
+
+=== Criteria API
+
+==== Zadanie : stworz metamodel 
+
+==== przykład : jpaMetaModel  https://github.com/przodownikR1/jpaMetaModel
+
+==== proste przykłady : HibernateKata  : SelectTest
+
+==== Zadanie stwórz implementacje DAO API do testu
+
+
+==== przykład : SpringJpaKata  : JpaCriteriaTest
+
+
+=== Example 
+
+==== Zadanie stworz zapytanie QBE
+
+==== przykład : SpringJpaKata : JpqlByExampleTest
+
+
+=== QUERY_DSL
+
+==== Stworz prosty DSL  https://github.com/przodownikR1/queryDSL_springData
+
+=== CRUD
+
+==== trwałość przez osiągalność przykład  projekt : HibernateKata : HibernateFactoryServiceTest.java : test (shouldSaveThenLoadItem)
+
+== Praca z kolekcjami
+
+
+=== Zastosować ElementCollection
+
+==== Set
+
+przykład : HibernateKata  : EmbeddedUser
+
+przykład : HibernateKata : UserColl
+
+==== Collection 
+
+przykład : HibernateKata : Item
+
+==== Map
+
+przykład : HibernateKata  : UserMap
+
+embedded : HibernateKata : Employee
+
+przykład kodu : ElementCollectionTest
+
+== Asocjacje
+
+=== many2many extra fields
+
+przykład : pl.java.scalatech.domain.manyToMany
+
+==== many2manyBidirectional
+
+przykład : ManyToManyTestBi
+
+==== many2one
+
+przykład : Many2OneTest
+
+przykład : SelfReferenceTest
+
+==== one2many
+
+przyklad : One2ManyTest
+
+przyklad :  One2ManyBiTest
+
+przykład : SelfReferenceTest
+
+==== one2one
+
+przykład :  One2OneBiTableTest
+
+przykład :  One2OneJoinTableTest
+
+przykład :  One2OneJoinTableTest , One2OneOrdinaryTest
+
+przykład   OneToOneTest
+
+przykład : One2OnePrimaryTest
+
+== Wydajność
+
+=== batch
+
+==== zadanie : Dodaj masowe encje za pomocą Criteria i JPQL
+
+przykład : SpringJpaKata : JpaBulkTest
+
+==== Zadanie włączenie statystyk
+
+przykład : HibernateKata : StatisticsJPATest
+
+==== Fetch: subselect i batch
+
+przykład :  SpringJpaKata  : JpaFetchTest
+
+== Problem z Lazy 
+
+== n+1 Problem
+
+przykład : SpringJpaKata :N1Test
+
+przykład : SpringJpaKata :  SaveEmTest
+
+
+=== zadanie rozwiązanie problemu lazyInitializationException
+
+Przykład : SpringJpaKata : JpaLazyTest
+
+=== FetchProfile
+
+przykład :  SpringJpaKata  : JpaFetchTest
+
+=== Eager problem 
+
+==== Cartesian problem
+
+przykład :  SpringJpaKata : JpaCartasianTest
+
+== Cache
+
+=== wyjaśnienie zasady działania http://przewidywalna-java.blogspot.com/search?q=hibernate
+
+=== zadanie : wprowadz cache do projektu
+
+== Lock
+
+=== dodać wersjonowanie
+
+przykład : projekt HibernateKata : VersionTest
+
+springData lock : przykład : SpringDataKata  : ItemRepository
+
+
+
+== DTO
+
+=== Zadanie wprowadz DTO , spłaszcz model domenowy
+
+== Pułapki i dobre praktyki
+
+przykład : SpringJpaKata : FilterTest
+
+== Podsumowanie : 
+
+Pełny model domenowy z relacjami i DAO. 
+Uzupełnić testy 
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
 == Koniec :)
 
    
