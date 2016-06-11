@@ -15,10 +15,13 @@ ifndef::imgsdir[:imgsdir: ./../img]
 
 
 
+=== Tworzenie połączenia bazowanowego 
 
+==== Tworzenie puli połączeń na przykładzie HikariCP
 
 === Tworzenie prostego szablonu projektu : Hibernate only
    operowanie na obiektach  Session i SessionFactory oraz persistence.xml 
+
 
 === Tworzenie prostego szablonu projektu : JPA 
    operowanie na obiektach  EntityManager i EntityManagerFactory oraz persistence.xml
@@ -347,7 +350,7 @@ Uzupełnić testy
 
  
 
-
+image::jhipster-jdl.png[]
 
 
 

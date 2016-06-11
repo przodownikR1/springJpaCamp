@@ -1,0 +1,78 @@
+
+entity Address {
+    addressId Long,
+	street String,
+	city String
+}
+
+entity Department {
+	departmentId Long,
+	name String,
+    employees Set
+}
+
+entity Employee {
+	employeeId Long,
+	name String,
+    salary Long,    
+    startDate Date,
+    address Address,
+    phones List,
+    dept Department,
+    manager Employee,
+    directs Employee,
+  
+
+}
+
+entity Phone{
+phoneId Long,
+number String,
+type PhoneType,
+employee Employee
+}
+
+entity Project  {
+	projectId Long,
+	name String,
+    employee Employee
+}
+
+enum PhoneType {
+    MOBILE, HOME, WORK
+}
+
+
+relationship OneToOne {
+	Employee{address} to Address
+}
+
+relationship OneToMany {
+	Employee{phones} to Phone
+}
+
+relationship OneToMany {
+	Employee{directs} to Employee
+}
+
+relationship ManyToMany {
+	Employee{projects} to Project
+}
+
+relationship ManyToMany{
+   Project{employees} to Employee
+}
+
+relationship ManyToOne{
+ Phone{employee} to Employee
+}
+
+relationship OneToMany {
+	Department{employee} to Employee
+}
+
+relationship ManyToOne {
+	Employee{dept} to Department
+}
+
+
