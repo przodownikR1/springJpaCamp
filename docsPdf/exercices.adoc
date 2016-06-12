@@ -299,6 +299,67 @@ przykład :  SpringJpaKata  : JpaFetchTest
 
 przykład : SpringJpaKata :N1Test
 
+przykład : SpringJpaKata : JpaPerformanceN1Test2
+
+
+Standard 6 kwerend : 
+
+[source,sql]
+----
+select jobs0_.customerId as customer4_1_0_, jobs0_.jobId as jobId1_1_0_, jobs0_.jobId as jobId1_1_1_, jobs0_.version as version2_1_1_, jobs0_.name as name3_1_1_ from Job jobs0_ where jobs0_.customerId=1; {executed in 0 msec}
+select jobs0_.customerId as customer4_1_0_, jobs0_.jobId as jobId1_1_0_, jobs0_.jobId as jobId1_1_1_, jobs0_.version as version2_1_1_, jobs0_.name as name3_1_1_ from Job jobs0_ where jobs0_.customerId=2; {executed in 0 msec}
+select jobs0_.customerId as customer4_1_0_, jobs0_.jobId as jobId1_1_0_, jobs0_.jobId as jobId1_1_1_, jobs0_.version as version2_1_1_, jobs0_.name as name3_1_1_ from Job jobs0_ where jobs0_.customerId=3; {executed in 0 msec}
+select jobs0_.customerId as customer4_1_0_, jobs0_.jobId as jobId1_1_0_, jobs0_.jobId as jobId1_1_1_, jobs0_.version as version2_1_1_, jobs0_.name as name3_1_1_ from Job jobs0_ where jobs0_.customerId=4; {executed in 0 msec}
+select jobs0_.customerId as customer4_1_0_, jobs0_.jobId as jobId1_1_0_, jobs0_.jobId as jobId1_1_1_, jobs0_.version as version2_1_1_, jobs0_.name as name3_1_1_ from Job jobs0_ where jobs0_.customerId=5; {executed in 0 msec}
+select jobs0_.customerId as customer4_1_0_, jobs0_.jobId as jobId1_1_0_, jobs0_.jobId as jobId1_1_1_, jobs0_.version as version2_1_1_, jobs0_.name as name3_1_1_ from Job jobs0_ where jobs0_.customerId=6; {executed in 0 msec}
+
+----
+
+Po @Fetch tuningu: 
+[source,sql]
+----
+select
+        jobs0_.customerId as customer4_1_1_,
+        jobs0_.jobId as jobId1_1_1_,
+        jobs0_.jobId as jobId1_1_0_,
+        jobs0_.version as version2_1_0_,
+        jobs0_.name as name3_1_0_ 
+    from
+        Job jobs0_ 
+    where
+        jobs0_.customerId in (
+            select
+                customer0_.customerId 
+            from
+                Customer customer0_
+
+----
+
+Po @BatchSize
+
+[source,sql]
+----
+select
+        jobs0_.customerId as customer4_1_1_,
+        jobs0_.jobId as jobId1_1_1_,
+        jobs0_.jobId as jobId1_1_0_,
+        jobs0_.version as version2_1_0_,
+        jobs0_.name as name3_1_0_ 
+    from
+        Job jobs0_ 
+    where
+        jobs0_.customerId in (
+            ?, ?, ?, ?, ?, ?
+        )
+---- 
+
+
+[source,sql]
+----
+select jobs0_.customerId as customer4_1_1_, jobs0_.jobId as jobId1_1_1_, jobs0_.jobId as jobId1_1_0_, jobs0_.version as version2_1_0_, jobs0_.name as name3_1_0_ from Job jobs0_ where jobs0_.customerId in (1, 2, 3, 4, 5, 6);
+----
+
+
 przykład : SpringJpaKata :  SaveEmTest
 
 
@@ -317,6 +378,8 @@ przykład :  SpringJpaKata  : JpaFetchTest
 przykład :  SpringJpaKata : JpaCartasianTest
 
 == Cache
+
+=== firstLevelCache test : SpringJpaKata : FirstLevelCacheTest
 
 === wyjaśnienie zasady działania http://przewidywalna-java.blogspot.com/search?q=hibernate
 
