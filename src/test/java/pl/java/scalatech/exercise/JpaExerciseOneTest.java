@@ -31,17 +31,11 @@ public class JpaExerciseOneTest {
     @Autowired
     private SampleRepo sampleRepo;
 
-    @Autowired
-
-
     @Test
     public void shouldBoostrap() {
         assertThat(em).isNotNull();
         assertThat(sampleRepo).isNotNull();
 
-
-
     }
-
 
 }
