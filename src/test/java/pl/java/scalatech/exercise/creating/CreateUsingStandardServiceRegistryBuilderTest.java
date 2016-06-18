@@ -6,6 +6,7 @@ import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 import org.assertj.core.api.Assertions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 
@@ -27,9 +28,16 @@ public class CreateUsingStandardServiceRegistryBuilderTest {
         log.info("{}",session);
     }
     @Test
-    public void should_B_SaveObject(){        
+    public void should_B_SaveObject(){
         Session session = sf.getCurrentSession();
+        try{        
+        Transaction tx = session.beginTransaction();
         session.save(Person.builder().name("przodownik").build());
+        tx.commit();
+        }finally {
+            session.close();
+        }
+        
     }
     @Test
     public void should_C_RetrieveObject(){        
