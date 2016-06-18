@@ -19,9 +19,8 @@ public final class HibernateUtils {
         cfg.setProperty("hibernate.connection.url","jdbc:h2:mem:testdb");
         cfg.setProperty("hibernate.connection.username","sa");
         cfg.setProperty("hibernate.generate_statistics","true");
-      
+        cfg.setProperty("hibernate.hbm2ddl.auto", "update");
         cfg.setProperty("hibernate.current_session_context_class", "thread");
-        /* cfg.setProperty("hibernate.hbm2ddl.auto", "update");*/
     }
 	
 	 public static SessionFactory getSessionFactory(ClassMapper cm) {
