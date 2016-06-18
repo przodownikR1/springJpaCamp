@@ -10,6 +10,8 @@
             <property name="hibernate.connection.username">sa</property>
             <property name="hibernate.show_sql">true</property>
             <property name="hibernate.dialect">org.hibernate.dialect.H2Dialect</property>
-            <mapping class="pl.java.scalatech.domain.sample.Person"/>           
+            <property name="hibernate.current_session_context_class">thread</property>
+            <mapping class="pl.java.scalatech.domain.sample.Person"/>       
+                
         </session-factory>
     </hibernate-configuration>
