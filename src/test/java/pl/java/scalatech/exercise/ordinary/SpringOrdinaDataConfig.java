@@ -6,6 +6,7 @@ import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -14,8 +15,12 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import pl.java.scalatech.exercise.ordinary.impl.Hibernate5PersonDaoImpl;
+
 @Configuration
 @EnableTransactionManagement
+@ComponentScan(basePackageClasses=Hibernate5PersonDaoImpl.class)
+//@EntityScan(basePackages="pl.java.scalatech.domain.simple")
 public class SpringOrdinaDataConfig {
     
  /*   @Resource(name="dataSource")
@@ -38,10 +43,11 @@ public class SpringOrdinaDataConfig {
     public LocalSessionFactoryBean localSessionFactoryBean() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        String[] packagesToScan = new String[]{"pl.java.scalatech.domain.sample"};
-        sessionFactory.setPackagesToScan(packagesToScan);
         Properties hibernateProperties = createHibernateProps();
         sessionFactory.setHibernateProperties(hibernateProperties);
+        String[] packagesToScan = new String[]{"pl.java.scalatech.domain.simple"};
+        sessionFactory.setPackagesToScan(packagesToScan);
+       
         return sessionFactory;
     }
 

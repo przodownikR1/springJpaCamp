@@ -59,7 +59,7 @@ public class Hibernate5PersonDaoImpl implements PersonDao {
 
 	@Override
 	public Person findByName(String name) {
-		List<Person> all = session().createQuery("from Person where name=:name").setParameter("name", name).list();
+		List<Person> all = session().createQuery("from Person where name= :name").setParameter("name", name).list();
 		if(!all.isEmpty()){
 			return all.get(0);
 		}
