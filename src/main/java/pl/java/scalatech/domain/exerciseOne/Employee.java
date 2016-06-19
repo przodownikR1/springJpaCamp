@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Entity;
-
 import pl.java.scalatech.domain.common.AbstractEntity;
-
-@Entity
 
 public class Employee extends AbstractEntity{
 

@@ -1,0 +1,36 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+<h1 th:text="${message}">JPQL</h1>
+
+<h2 th:text="${error}"></h2>
+
+
+<div class="table-responsive">
+
+<form th:object="${query}" method="post" class="form-horizontal">
+<fieldset>        
+       <div class="form-group" th:classappend="${#fields.hasErrors('name)}? 'has-error has-feedback'">
+        <label for="name" class="col-sm-2 control-label" th:text="#{name}">name</label>
+        
+          <div class="col-xs-3">
+               <input type="text" id="name" name="name" th:field="*{name}" class="form-control" value="ee"/>
+                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="help-block">error!</span>
+         </div>
+        </div>
+         
+     <div class="form-group">
+           <div class="col-sm-offset-2 col-sm-10">
+             <button type="submit" class="btn btn-primary">submit</button>
+           </div>
+    </div>
+     
+      </fieldset>
+    </form>
+    
+    
+ OK
+</div>
+</body>
+</html>

@@ -1,0 +1,55 @@
+
+    Wprowadzenie
+        Relacyjne bazy danych i język SQL w kontekście aplikacji Java
+        Rozbieżności między modelem relacyjnym i obiektowym
+        Strategie realizacji utrwalania
+        Mapowanie obiektowo-relacyjne
+        Standard Java Persistence API i jego implementacje
+        Konfiguracja i uruchamianie projektu
+        Obiekty trwałe - tworzenie, cykl życia, podstawy mapowania
+        Usługa utrwalania i zarządzanie encjami
+    Mapowanie obiektwo-relacyjne
+        Encje vs. Komponenty
+        Tożsamość i równość obiektów trwałych
+        Mapowanie klas encji (XML, adnotacje)
+        Klucze główne i strategie ich generowania
+        Mapowanie relacji
+        Wykorzystanie kolekcji i map
+        Odwzorowywanie relacji dziedziczenia
+        Relacje polimorficzne
+        Definiowanie i obsługa typów niestandardowych
+        Użycie istniejących baz i struktur danych
+        Analiza i ingerencja w generowane instrukcje SQL
+    Transakcje i kontrola dostępu
+        Bezpieczeństwo danych w środowisku wielo-użytkownikowym
+        Transakcje - definicja i konfiguracja (deklaratywnie, programowo)
+        Standard Java Transaction API
+        Kontrola współbieżnego dostępu poprzez blokady
+        Transakcje rozproszone
+        Wykorzystanie nietransakcyjnych źródeł danych
+    Praca z obiektami trwałymi
+        Zarządzanie encjami w kontekście konwersacji
+        Kaskadowa propagacja wykonywanych operacji
+        Optymalizacja ładowania danych i użycie pamięci cache
+        Przetwarzanie wsadowe
+        Wywołania zwrotne i klasy nasłuchujące
+    Wykonywanie zapytań
+        Przygotowywanie i uruchamianie zapytań
+        Stosowanie zapytań nazwanych
+        Język JPA QL / HQL (składnia, operatory, klauzule, wyrażenia funkcjonalne)
+        Relacje i wykonywanie złączeń
+        Zapytania w oparciu o Criteria API
+        Wykonywanie natywnych zapytań SQL
+        Filtrowanie i cachowanie wyników
+    Wydajność
+        Strategie ładowania z użyciem obiektów proxy
+        Podzapytania i prefetching kolekcji
+        Wsadowe wykonywanie operacji
+        Cachowanie danych i architektura Hibernate
+        Wykorzystanie pamięci cache pierwszego i drugiego poziomu
+        Profilowanie i monitorowanie wydajności
+    Dobre praktyki
+        Architektura warstwowa
+        Implementacja usług dostępu do danych
+        Utrwalanie w kontekście aplikacji webowych
+        Testowanie

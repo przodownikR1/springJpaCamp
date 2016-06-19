@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedAttributeNode;
@@ -28,7 +27,7 @@ import pl.java.scalatech.domain.common.AbstractEntity;
 @NamedEntityGraphs({
 @NamedEntityGraph(name="itemOffer",attributeNodes= {@NamedAttributeNode("offers")})
 })
-@Entity
+//@Entity
 public class Item extends AbstractEntity {
 
     private static final long serialVersionUID = 5474170031394030929L;

@@ -3,7 +3,6 @@ package pl.java.scalatech.domain.lazy;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.java.scalatech.domain.common.AbstractEntity;
 
-@Entity
+//@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
