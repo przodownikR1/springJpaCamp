@@ -22,12 +22,70 @@ ifndef::imgsdir[:imgsdir: ./../img]
 === Tworzenie prostego szablonu projektu : Hibernate only
    operowanie na obiektach  Session i SessionFactory oraz persistence.xml 
 
+==== Tworzenie SessionFactory na podstawie hibernate.cfg.xml
+
 
 === Tworzenie prostego szablonu projektu : JPA 
    operowanie na obiektach  EntityManager i EntityManagerFactory oraz persistence.xml
    
 === Tworzenie prostego szablonu projektu : Spring + Spring Data
    integracja Hibernate po JPA w Spring
+
+[source,java]
+----
+Configuration cfg = new Configuration()
+SessionFactory sessionFactory = cfg.buildSessionFactory();
+----
+
+==== Session per instacja bazy 
+
+[source,java]
+----
+Configuration configurationH2 = new Configuration().configure("h2.cfg.xml");
+SessionFactory sessionFactoryH2 = configurationH2.buildSessionFactory();
+Configuration configurationPostgresql = new  Configuration().configure("postgresql.cfg.xml");
+SessionFactory sessionFactoryPostgresql = configurationPostgresql.buildSessionFactory();
+----
+
+[source,java]
+----
+StandardServiceRegistryBuilder serviceRegistryBuilder = new StandardServiceRegistryBuilder();
+serviceRegistryBuilder.applySettings(configuration.getProperties());
+configuration.addPackage("pl.java.scalatech.domain.simple").addAnnotatedClass(Person.class);
+ServiceRegistry serviceRegistry = serviceRegistryBuilder.build();
+sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+----
+
+[source,java]
+----
+Configuration configuration = new Configuration();
+configuration = configuration.configure();
+StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder();
+builder = builder.applySettings(configuration.getProperties());
+SessionFactory sessionFactory = configuration.buildSessionFactory(builder.build());
+----
+
+NOTE: Singleton pattern
+
+NOTE: thread-safe
+
+NOTE: immutable
+
+NOTE: Factory: tworzy, zarządza, pobiera Session per request. Session pobiera fizyczne połączenie do bazy danych   
+   
+=== Ćwiczenia : exercise/creating
+
+==== CreateSessionByOrdinarySpring
+
+==== CreateSessionByPersistenceContext
+
+==== CreateSessionBySpringData
+
+==== CreateUsingStandardServiceRegistryBuilder
+
+==== CreateUsingStandardServiceRegistryBuilder2
+
+   
    
 === Stworzenie i zapisanie prostej encji oraz jej odczyt 
 
