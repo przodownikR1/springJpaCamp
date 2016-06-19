@@ -89,6 +89,14 @@ NOTE: Factory: tworzy, zarządza, pobiera Session per request. Session pobiera f
    
 === Stworzenie i zapisanie prostej encji oraz jej odczyt 
 
+=== Sprawdzić logi : konfiguracja
+
+[source,txt]
+----
+org.hibernate.type=trace
+
+----
+
 === Mapowania
 
 === MetaModel
