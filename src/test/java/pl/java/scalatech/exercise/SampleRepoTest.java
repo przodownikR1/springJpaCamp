@@ -34,15 +34,15 @@ public class SampleRepoTest {
 
     @Test
     public void shouldFindByName() {
-        //List<Employee> employees = sampleRepo.findEmployeeWithName("tomek");
-        //Assertions.assertThat(employees).hasSize(2);
+        // List<Employee> employees = sampleRepo.findEmployeeWithName("tomek");
+        // Assertions.assertThat(employees).hasSize(2);
     }
 
     @Test
     public void shouldFindEmployees() {
-       // List<String> employeeNames = sampleRepo.findEmpNames();
-       // Assertions.assertThat(employeeNames).hasSize(13);
-       // log.info("{}", employeeNames);
+        // List<String> employeeNames = sampleRepo.findEmpNames();
+        // Assertions.assertThat(employeeNames).hasSize(13);
+        // log.info("{}", employeeNames);
     }
 
     @Test
@@ -74,7 +74,6 @@ public class SampleRepoTest {
     public void shouldRetrieveEmployeeUsingMultiSelect() {
         // TODO
     }
-
 
     @Test
     public void shouldRetrieveEmpleyeeFetchPhones() {
