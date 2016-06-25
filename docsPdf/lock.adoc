@@ -1,0 +1,277 @@
+
+== Lock/Blokowanie
+
+=== Enabling Optimistic Concurrency Control (Blokowanie optymistyczne)/Blokowanie  optymistyczne z  wersjonowaniem
+
+- zakładamy, żę obecnie wykonywana transakcja na jakimś zasobie jest jedyną, która dokonuje zmian.
+ 
+- hibernate tworzy dodatkową kolumnę **@Version** możliwe typy : 
+ 
+-- int
+ 
+-- Integer
+
+-- short
+
+-- Short
+
+-- long
+
+-- Long
+
+-- java.sql.Timestamp
+
+  - podczas zatwierdzania zmian porównywalny jest orginalny numer wersji z bieżącą wartością. W razie różnicy, zatwierdzenie transakcji jest wycofane i wyrzucany jest wyjątek
+ **OptimisticLockException**
+ 
+WARNING: nie chroni przed  **phantom read**
+  
+NOTE: Nie zakłada żadnych blokad na bazie
+
+NOTE: Wydajność 
+
+==== LockMode
+
+===== OPTIMISTIC – w czasie zatwierdzania wykonywane jest zapytanie SELECT ….. FOR UPDATE. 
+     Tylko jedna transakcja ma chwilowy dostęp do zasobu. Jeśli druga transakcja chciałby zmodyfikować obiekt zostanie wyrzucony wyjątek
+
+=====  OPTIMISTIC_FORCE_INCREMENT 
+
+*** Przykład
+
+[source,java]
+----
+
+@Entity 
+public class Book {
+ 
+@Id
+@GeneratedValue (strategy=GenerationType.TABLE)
+@Column (name="ISBN")
+private long isbn;
+ 
+@Version
+@Column (name="version")
+private Integer version;
+ 
+@Column (name="book_Name")
+private String bookName;
+
+}
+
+----
+
+SQL : 
+
+[source, sql]
+----
+select
+        book0_.id as id1_0_0_,
+        book0_.version as version2_0_0_,
+        book0_.name as name3_0_0_,
+        book0_.title as title4_0_0_ 
+    from
+        Book book0_ 
+    where
+        book0_.id=?
+       
+       
+       
+         update  Book  set version=?, name=?, title=? 
+          where id=?  and version=?
+----
+
+=== Select For Update
+
+[source,sql]
+----
+ SELECT * FROM Person FOR UPDATE
+----
+** Blokowanie pesymistyczne (od momentu odczytania do momentu zapisu modyfikacji do bazy)
+
+** blokuje dany wiersz i wszystkie z nim powiązane indeksami wiersze
+
+** Rozwiązuje problem napisywania zmian pierwszej transakcji przez drugą. (ostatnia wygrywa zawsze)
+
+
+=== Using Pessimistic Concurrency Control / Blokowanie pesymistyczne
+
+- mechanizm umiemożliwiający współbieżny dostęp do konkretnego zasobu.
+- zakładana w momencie odczytu danych aż do zakończenia transakcji
+- zakładana na wiersz w momencie odczytu (Select .... For Update )
+
+
+
+NOTE:  prostszy kod bez @Version
+
+WARNING: locki na bazie
+ 
+
+CAUTION: Nie jest to najlepszy wybór dla wysoce współbieżnej aplikacji. Powoduje istotny spadek wydajności. Możemy liczyć się z zakleszczeniami (deadlock).
+
+    **READ** - blokowanie na odczyt (ochrona przed dirty reads i  unrepeatable reads)
+     Zakładany automatycznie gdy Hibernate odczytuje dane przy poziomie izolacji Repeatable Read or Serializable isolation level.
+     
+    **WRITE** - blokowanie na zapis (ochrona przed dirty reads i  unrepeatable reads)
+     Zakładany automatycznie, gdy Hibernate wstawia lub aktualizuje wiersz
+     
+=== PESSIMISTIC_READ 
+
+** **Blokada do odczytu** -  uniemożliwia innym transakcjom zmienianie odczytywanych danych w przedziale rozpoczęcia transakcji aż do jej końca
+** zapewnia odczyty niepowtarzalne
+** inne transakcje mogą odczytywać dane będące w obrębie blokady ale nie mogą ich modyfikować.
+
+
+
+[source,java]
+----
+ @Test
+    public void shouldLockWriteWork(){
+        EntityManager entityManager1 = emf.createEntityManager();
+        entityManager1.getTransaction().begin();
+        entityManager1.persist(Person.builder().email("przodownikR1_1@gmail.com").firstname("slawek1").disable(true).build());
+        
+        log.info("{}",entityManager1.createQuery("FROM Person").getResultList());
+        entityManager1.getTransaction().commit();
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        Person loaded1 = entityManager.find(Person.class, 1l,LockModeType.PESSIMISTIC_WRITE);
+        log.info("{}",loaded1);
+        entityManager.getTransaction().commit();
+        
+    }
+----
+
+[source,sql]
+----
+select
+        person0_.id as id1_0_0_,
+        person0_.disable as disable2_0_0_,
+        person0_.effectiveModify as effectiv3_0_0_,
+        person0_.email as email4_0_0_,
+        person0_.firstname as firstnam5_0_0_,
+        person0_.modify as modify6_0_0_ 
+    from
+        Person person0_ 
+    where
+        person0_.id=? for update
+----
+
+=== PESSIMISTIC_WRITE
+
+** **Blokada do zapisu** - wykorzystywana jest do celów aktualizacji. Uniemożliwia innym transakcjom zmieniania danych w obrębie
+ transakcji, ale umożliwia umożliwia brudne odczyty pozostałym transakcją, które mogą wykorzystywać nasze dane.
+
+[source,java]
+----
+Book book= em.find(Book.class, 1, LockModeType.PESSIMISTIC_WRITE);
+
+//the same as 
+
+em.lock(book, LockModeType.PESSIMISTIC_WRITE);
+
+---- 
+ 
+[source,java]
+----
+   @Test
+    public void shouldLockReadWork(){
+        EntityManager entityManager1 = emf.createEntityManager();
+        entityManager1.getTransaction().begin();
+        entityManager1.persist(Person.builder().email("przodownikR1_1@gmail.com").firstname("slawek1").disable(true).build());
+        entityManager1.getTransaction().commit();
+        log.info("{}",entityManager1.createQuery("FROM Person").getResultList());
+        EntityManager entityManager = emf.createEntityManager();
+        entityManager.getTransaction().begin();
+        Person loaded1 = entityManager.find(Person.class, 1l,LockModeType.PESSIMISTIC_READ);
+        log.info("{}",loaded1);
+        entityManager.getTransaction().commit();
+        
+    }
+---- 
+ 
+[source,sql]
+----
+select
+        person0_.id as id1_0_0_,
+        person0_.disable as disable2_0_0_,
+        person0_.effectiveModify as effectiv3_0_0_,
+        person0_.email as email4_0_0_,
+        person0_.firstname as firstnam5_0_0_,
+        person0_.modify as modify6_0_0_ 
+    from
+        Person person0_ 
+    where
+        person0_.id=? for update
+----      
+
+==== LockMode - blokada dla konkretnego elementu
+
+===== LockMode.NONE
+ 
+**  nie wykonuj zapytania chyba, że obiektu nie ma w buforze. Pominięcie poziomów buforowania i przejście do bazy danych.
+**    Czytaj z bazy danych tylko wtedy gdy obiekt nie istnieje w buforze
+
+===== LockMode.READ
+
+** pomiń oba poziomy buforowania i dokonaj sprawdzenia wersji , aby sprawdzić czy dane w pamięci są takie same jak bazie
+**   Czytaj z bazy niezależnie od zawartości bufora  
+
+
+===== LockMode.WRITE
+
+ ** uzyskiwany automatycznie , gdy zarządca trwałości zapisał dane do wiersza aktualnej transakcji
+ ** **LockMode.WRITE** jest zakładany automatycznie, gdy Hibernate wstawia lub aktualizuje wiersz
+ 
+ 
+===== LockMode.UPGRADE
+
+ ** pomija poziomy buforowania, dokonuje sprawdzenia wersji i uzyskuje blokadę pesymistyczną na poziomie bazy
+ ** **LockMode.UPGRADE** może być założony, gdy użytkownik użyje SELECT ... FOR UPDATE w bazie wspierającej tą składnie.
+ ** żaden inna transakcja nie może zmodyfikować rekordu
+ 
+ 
+===== LockMode.UPGRADE_NOWAIT
+
+ ** do samo co przy **UPGRADE** ale stosuje zapytanie SELECT ... FOR UPDATE NOWAIT . Wyłącza to czekanie na zwolnienie blokad dotyczących wpółbieżności i natychmiastowe 
+ zgłoszenie wyjątku , jeśli blokady nie udało się uzyskać.
+ ** LockMode.UPGRADE_NOWAIT może być założony, gdy użytkownik użyje SELECT ... FOR UPDATE NOWAIT w bazie Oracle.
+ 
+ 
+[source,java]
+----
+public Object load(Class theClass, Serializable id, LockMode lockMode) throws HibernateException 
+public Object load(String entityName, Serializable id, LockMode lockMode) throws HibernateException
+----
+ 
+ 
+==== Blokowanie pojedyńczych encji
+
+*** Przykład
+
+[source,java]
+----
+User user = em.find(User.class, 4L);
+em.lock(user, LockModeType.PESSIMISTIC_WRITE);
+//lub
+User user = em.find(User.class, 4L, LockModeType.PESSIMISTIC_WRITE);
+---- 
+
+==== Blokowanie wszystkich encji zwracanych przez kwerende
+
+*** Przykład
+
+[source,java]
+----
+String statement = ....
+TypedQuery<User> query = em.createQuery(statement, User.class);
+query.setLockMode(LockModeType.PESSIMISTIC_READ);
+List<User> users = query.getResultList();
+----
+ 
+== Linki 
+lock hibernate : http://docs.jboss.org/hibernate/orm/5.0/devguide/en-US/html/ch05.html
+
+hibernate-locking-patterns https://dzone.com/articles/hibernate-locking-patterns-%E2%80%93 
+ 
+

@@ -33,13 +33,31 @@ ifndef::imgsdir[:imgsdir: ./../img]
 
 === Mapowania
 
+==== Ćwiczenia: 
+
+** Stwórz relacje : 
+
+*** Person ma wiele samochodów  (@OneToMany), mieszka w jednym z wielu krajów (@ManyToOne) , na jedną z wielu ról (@ManyToMany)  
+*** Country 
+*** Car
+*** Role
+
+** Zasil obiekty poprzez test
+
 === MetaModel
+
+==== Ćwiczenie stwórz sam metamodel do poprzeniego  
 
 === JPQL
 
+==== Ćwiczenie napisz kwerendy do przykładów
+
 === Pobieranie danch : Fetches
 
+
 === Cache
+
+==== Ćwiczenie wprowadź cache
 
 === Criteria API
 
@@ -49,13 +67,12 @@ ifndef::imgsdir[:imgsdir: ./../img]
 
 === Setupowanie Spring/Spring Data/Hibernate oraz przykłady użycia i tworzenia repozytoriów 
 
+
 ==== Audit : SpringDataKata : AuditTest
 ==== Slice, Paging, Async, Stream : SpringDataKata: 	SpringDataRepositoryTest
 ==== QBE : SpringJpaKata : JpqlByExampleTest:shouldUseExample()
 
 === Zadanie przetestowanie : repozytorium i relacji
-
-=== Zadanie użycie funkcjonalności Audit , Pagingu , Optional i QBE w stosunku do utworzonych encji i repozytorim
 
 === Utworzenie Specyfikacji oraz customizacja repozytorium
 
@@ -82,8 +99,6 @@ ifndef::imgsdir[:imgsdir: ./../img]
 === przykład : Konfiguracja Hibernate SessionFactory : HibernateKata  : AbstractHibTest
 
 == JDBC :  HibernateKata :  JdbcConfig
-
-== Populator : HibernateKata : PopulatorConfig
 
 == Prosta konfiguracja JPA do testów  : HibernateKata  : TestSelectorConfig 
 
@@ -409,37 +424,7 @@ Pełny model domenowy z relacjami i DAO.
 Uzupełnić testy 
 
 
-
-
- 
-
 image::jhipster-jdl.png[]
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
 
 == Koniec :)
 
