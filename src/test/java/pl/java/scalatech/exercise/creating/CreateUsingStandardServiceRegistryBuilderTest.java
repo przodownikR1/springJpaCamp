@@ -18,8 +18,7 @@ public class CreateUsingStandardServiceRegistryBuilderTest {
     
     //AnnotationConfiguration,  ServiceRegistryBuilder  deprecated from hibernate 4
     
-    SessionFactory sf = HibernateUtil.getSessionFactory();
-    
+    SessionFactory sf = null;
     @Test
     public void should_A_CreateSession(){
         Assertions.assertThat(sf).isNotNull();
