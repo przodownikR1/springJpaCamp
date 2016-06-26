@@ -16,12 +16,16 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
+
 @Table(name = "PERSON")
+
+@NoArgsConstructor
+@AllArgsConstructor
+
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     private String name;

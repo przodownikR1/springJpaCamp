@@ -121,6 +121,16 @@ org.hibernate.type=trace
 === Pobieranie danch : Fetches
 
 
+==== Pobieranie przez natualId
+
+[source,java]
+----
+  Person loaded = session.byNaturalId(Person.class).using("pesel", PESEL).load();
+----
+
+** NaturalIdTest
+
+
 === Cache
 
 ==== Ćwiczenie wprowadź cache

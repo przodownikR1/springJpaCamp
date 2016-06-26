@@ -3,11 +3,8 @@ package pl.java.scalatech.domain.exerciseOne;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.persistence.Entity;
-
 import pl.java.scalatech.domain.common.AbstractEntity;
 
-@Entity
 public class Project extends AbstractEntity{
 
 
