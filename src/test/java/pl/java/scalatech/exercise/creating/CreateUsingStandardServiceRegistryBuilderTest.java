@@ -1,9 +1,11 @@
 package pl.java.scalatech.exercise.creating;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.runners.MethodSorters.NAME_ASCENDING;
 
-import org.assertj.core.api.Assertions;
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -23,13 +25,13 @@ public class CreateUsingStandardServiceRegistryBuilderTest {
     
     @Test
     public void should_A_CreateSession(){
-        Assertions.assertThat(sf).isNotNull();
+        assertThat(sf).isNotNull();
         Session session = sf.getCurrentSession();
         log.info("{}",session);
     }
     @Test
     public void should_B_SaveObject(){
-        Session session = sf.getCurrentSession();
+        Session session = sf.openSession();
         try{        
         Transaction tx = session.beginTransaction();
         session.save(Person.builder().name("przodownik").build());
@@ -41,8 +43,26 @@ public class CreateUsingStandardServiceRegistryBuilderTest {
     }
     @Test
     public void should_C_RetrieveObject(){        
-        Session session = sf.getCurrentSession();
-        Person p = session.load(Person.class, 1l);
-        Assertions.assertThat(p).isNotNull();
+        Session session = sf.openSession();
+        try{
+        List<Person> people = session.createCriteria(Person.class).list();
+        assertThat(people).hasSize(1);        
+        log.info("{}",people.get(0));
+        }finally {
+            session.close();
+            
+        }
+    }
+    @Test
+    public void should_D_RetrieveByLoad(){
+        Session session = sf.openSession();
+        try{
+            Person loaded = session.load(Person.class, 1l);            
+            assertThat(loaded).isNotNull();
+        }finally {
+            session.close();
+            
+        }
+        
     }
 }
