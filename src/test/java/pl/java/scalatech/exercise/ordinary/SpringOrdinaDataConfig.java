@@ -53,7 +53,7 @@ public class SpringOrdinaDataConfig {
 
     private Properties createHibernateProps() {
         Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5InnoDBDialect");
+        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2");
         hibernateProperties.setProperty("hibernate.show_sql", "true");
         hibernateProperties.setProperty("hibernate.current_session_context_class","org.springframework.orm.hibernate5.SpringSessionContext");
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "update");
