@@ -21,7 +21,12 @@ public class NaturalIdTest {
     
     @Test
     public void shouldSavePerson(){
-        
+        //tODO
     }
     
+    
+    @Test
+    public void shouldLoadedByNaturalIdPerson() {
+        //TODO
+    }
 }
