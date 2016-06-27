@@ -10,18 +10,21 @@ import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import lombok.extern.slf4j.Slf4j;
+import pl.java.scalatech.config.SpringOrdinaDataConfig;
 import pl.java.scalatech.domain.simple.Person;
-import pl.java.scalatech.exercise.ordinary.PersonDao;
-import pl.java.scalatech.exercise.ordinary.SpringOrdinaDataConfig;
+import pl.java.scalatech.repository.PersonDao;
+
 
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { SpringOrdinaDataConfig.class})
 @FixMethodOrder(NAME_ASCENDING)
+@ActiveProfiles("hib")
 @Transactional
 public class CreateSessionByOrdinarySpring {
     @Autowired

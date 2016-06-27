@@ -1,18 +1,20 @@
-package pl.java.scalatech.exercise.ordinary.impl;
+package pl.java.scalatech.repository.impl;
 
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import lombok.extern.slf4j.Slf4j;
 import pl.java.scalatech.domain.simple.Person;
-import pl.java.scalatech.exercise.ordinary.PersonDao;
+import pl.java.scalatech.repository.PersonDao;
 
 @Repository
 @Slf4j
+@Profile("hib")
 public class Hibernate5PersonDaoImpl implements PersonDao {
 	
 	@Autowired

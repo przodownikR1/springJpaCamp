@@ -1,4 +1,4 @@
-package pl.java.scalatech.exercise.creating.sessionBuilder;
+package pl.java.scalatech.session;
 
 import org.hibernate.cfg.Configuration;
 @FunctionalInterface

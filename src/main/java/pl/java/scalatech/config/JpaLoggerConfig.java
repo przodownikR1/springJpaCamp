@@ -30,7 +30,7 @@ public class JpaLoggerConfig {
     @Bean
     @Primary
     public DataSource dataSource() {
-        log.info("+++++ dataSource init ....");
+        log.info("+++++ dataSource init ....");        
         Log4jdbcProxyDataSource dataSource = new Log4jdbcProxyDataSource(dataSourceOrginal());
         dataSource.setLogFormatter(logFormater());
         return dataSource;
@@ -43,5 +43,12 @@ public class JpaLoggerConfig {
         formatter.setSqlPrefix("SQL:\r");
         return formatter;
     }
-
+/*
+ * HikariConfig dataSourceConfig = new HikariConfig();
+        dataSourceConfig.setJdbcUrl(env.getRequiredProperty("db.url"));
+        dataSourceConfig.setDriverClassName(env.getRequiredProperty("db.driver"));
+        dataSourceConfig.setUsername(env.getRequiredProperty("db.username"));
+        dataSourceConfig.setPassword(env.getRequiredProperty("db.password"));
+        return new HikariDataSource(dataSourceConfig);
+ */
 }

@@ -1,4 +1,4 @@
-package pl.java.scalatech.exercise.ordinary;
+package pl.java.scalatech.repository;
 
 import pl.java.scalatech.domain.simple.Person;
 

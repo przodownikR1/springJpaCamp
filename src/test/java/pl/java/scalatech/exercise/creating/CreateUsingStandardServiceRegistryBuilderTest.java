@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import lombok.extern.slf4j.Slf4j;
 import pl.java.scalatech.domain.simple.Person;
-import pl.java.scalatech.exercise.creating.sessionBuilder.HibernateUtil;
+import pl.java.scalatech.session.HibernateUtil;
 @Slf4j
 @FixMethodOrder(NAME_ASCENDING)
 public class CreateUsingStandardServiceRegistryBuilderTest {

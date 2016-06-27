@@ -11,12 +11,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import lombok.extern.slf4j.Slf4j;
-import pl.java.scalatech.exercise.SpringPersistenceConfig;
+import pl.java.scalatech.config.SpringPersistenceConfig;
+
 @Slf4j
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { SpringPersistenceConfig.class})
-//@ActiveProfiles("xml")
-@ActiveProfiles("withoutXml")
+@ActiveProfiles("xml")
+//@ActiveProfiles("withoutXml")
 public class CreateSessionByPersistentContextTest {
     
     @PersistenceContext

@@ -16,12 +16,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @Builder
-
 @Table(name = "PERSON")
-
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
