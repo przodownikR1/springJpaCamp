@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 
+import com.zaxxer.hikari.HikariDataSource;
+
 import lombok.extern.slf4j.Slf4j;
 import net.sf.log4jdbc.Log4jdbcProxyDataSource;
 import net.sf.log4jdbc.tools.Log4JdbcCustomFormatter;
@@ -50,5 +52,29 @@ public class JpaLoggerConfig {
         dataSourceConfig.setUsername(env.getRequiredProperty("db.username"));
         dataSourceConfig.setPassword(env.getRequiredProperty("db.password"));
         return new HikariDataSource(dataSourceConfig);
+        
+        =================================================
+         
+          @Bean(name="hikariDataSource",destroyMethod="close")
+    public DataSource hikariDataSource() {
+        log.info( "configure hikariCP config" );
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setDriverClassName( driverClassName );
+      // dataSource.setDataSourceProperties( hikariCPConfig.getHikariDatasource() );
+        dataSource.setUsername( username );
+        dataSource.setPassword( password );
+        dataSource.setJdbcUrl( url );
+        dataSource.addDataSourceProperty("dataSource.cachePrepStmts", "true");
+        dataSource.addDataSourceProperty("dataSource.prepStmtCacheSize", "250");
+        dataSource.addDataSourceProperty("dataSource.prepStmtCacheSqlLimit", "2048");
+        dataSource.addDataSourceProperty("dataSource.useServerPrepStmts", "true");
+        dataSource.setMaximumPoolSize(80);
+        dataSource.setConnectionTimeout(2000);
+        dataSource.setMinimumIdle(30);
+        dataSource.setMetricRegistry(metricRegistry);
+        dataSource.setConnectionTestQuery("SELECT 1;");
+
+        return dataSource;
+    }
  */
 }
