@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import pl.java.scalatech.domain.AbstractEntity;
 
 @Entity
@@ -25,6 +26,7 @@ import pl.java.scalatech.domain.AbstractEntity;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@ToString(exclude={"dept","manager","directs","projects","phones"})
 public class Employee extends AbstractEntity{
 
     private static final long serialVersionUID = -6882527852158059488L;
