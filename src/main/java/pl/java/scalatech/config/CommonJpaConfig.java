@@ -32,7 +32,7 @@ public class CommonJpaConfig {
      protected String dialect;
 
     // @Value("${spring.jpa.hibernate.ddl-auto}")
-     protected Boolean hbm2ddlAuto = true;
+     protected Boolean hbm2ddlAuto = false;
 
     // @Value("${spring.jpa.show-sql}")
      protected Boolean showSql = true;
